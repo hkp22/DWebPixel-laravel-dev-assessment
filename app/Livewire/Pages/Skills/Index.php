@@ -19,6 +19,11 @@ class Index extends Component
         $this->form->reset();
     }
 
+    public function delete(Skill $skill)
+    {
+        $skill->delete();
+    }
+
     public function render()
     {
         return view('livewire.pages.skills.index', [

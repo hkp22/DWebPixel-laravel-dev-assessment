@@ -4,28 +4,35 @@
             <h1 class="text-3xl font-bold">Skills</h1>
         </div>
 
-
         <div class="flex space-x-6">
             <!-- Left Section: List of Skills -->
             <div class="w-2/3">
+
                 <div class="bg-white rounded-lg shadow">
                     <div class="px-6 py-3 rounded-t-lg bg-gray-50">
                         <h2 class="text-xl font-semibold">Name</h2>
                     </div>
                     <div>
                         <ul>
-                            @foreach ($skills as $skill)
+                            @forelse ($skills as $skill)
                                 <li wire:key="skill-{{ $skill->id }}" wire:transition.duration.500ms
                                     class="flex items-center justify-between px-6 py-4 border-b border-gray-100">
                                     <span>{{ $skill->name }}</span>
                                     <div>
                                         <a href="#" wire:click.prevent="edit({{ $skill->id }})"
                                             class="mr-2 text-blue-500 hover:underline">Edit</a>
+
                                         <a href="#" wire:click.prevent="delete({{ $skill->id }})"
-                                            class="text-red-500 hover:underline">Delete</a>
+                                            class="text-red-500 hover:underline"
+                                            wire:confirm="Are you sure you want to delete this skill?"
+                                            wire:loading.attr="disabled">
+                                            Delete
+                                        </a>
                                     </div>
                                 </li>
-                            @endforeach
+                            @empty
+                                <li class="px-6 py-4">No skills found.</li>
+                            @endforelse
                         </ul>
 
                     </div>
