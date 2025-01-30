@@ -43,11 +43,12 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($jobs as $job)
-                                <tr class="border-b dark:border-gray-700">
+                            @forelse ($jobs as $job)
+                                <tr :wire:key="'job-' . $job->id" class="border-b dark:border-gray-700">
                                     <th scope="row"
                                         class="px-4 py-3 font-semibold text-gray-900 whitespace-nowrap dark:text-white">
-                                        {{ $job->title }}</th>
+                                        {{ $job->title }}
+                                    </th>
                                     <td class="px-4 py-3 whitespace-nowrap">{{ str($job->description)->words(7) }}
                                     </td>
                                     <td class="px-4 py-3 text-center">
@@ -75,11 +76,18 @@
                                         </div>
                                     </td>
                                     <td class="flex items-center justify-end px-4 py-3">
-                                        <a href="#"
+                                        <a href="#" wire:click.prevent="delete({{ $job->id }})"
+                                            wire:confirm="Are you sure you want to delete this Job listing?"
                                             class="text-sm px-3 py-1.5 rounded hover:bg-slate-100 transition-colors text-red-500">Delete</a>
                                     </td>
                                 </tr>
-                            @endforeach
+                            @empty
+                                <tr class="border-b dark:border-gray-700">
+                                    <td colspan="10" class="p-6 text-center ">
+                                        No jobs found.
+                                    </td>
+                                </tr>
+                            @endforelse
                         </tbody>
                     </table>
                 </div>
