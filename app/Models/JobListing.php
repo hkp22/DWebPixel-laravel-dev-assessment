@@ -21,4 +21,14 @@ class JobListing extends Model
     {
         return $this->belongsToMany(Skill::class);
     }
+
+    public function getExtraAttribute()
+    {
+        return explode(',', $this->extra_info ?? '');
+    }
+
+    public function companyLogoPath()
+    {
+        return asset('storage/' . $this->company_logo);
+    }
 }
