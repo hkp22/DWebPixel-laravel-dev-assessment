@@ -20,7 +20,7 @@ return new class () extends Migration {
             $table->string('salary');
             $table->string('extra_info')->nullable();
             $table->string('company_name');
-            $table->string('logo')->nullable();
+            $table->string('company_logo')->nullable();
             $table->timestamps();
         });
     }

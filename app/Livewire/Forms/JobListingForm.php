@@ -29,7 +29,7 @@ class JobListingForm extends Form
     public $company_name = '';
 
     #[Validate('required|image|max:2048')]
-    public $logo = '';
+    public $company_logo = '';
 
     #[Validate('required|exists:skills,id')]
     public $skills = [];

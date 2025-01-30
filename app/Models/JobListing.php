@@ -14,7 +14,7 @@ class JobListing extends Model
         'salary',
         'extra_info',
         'company_name',
-        'logo',
+        'company_logo',
     ];
 
     public function skills()

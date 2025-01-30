@@ -10,7 +10,7 @@ class StoreJobListing
 {
     public function execute(User $user, array $data): JobListing
     {
-        $data['logo'] = $this->storeLogo($data['logo'] ?? null);
+        $data['company_logo'] = $this->storeCompanyLogo($data['company_logo'] ?? null);
 
         $jobListing = $user->jobListings()->create($data);
 
@@ -21,7 +21,7 @@ class StoreJobListing
         return $jobListing;
     }
 
-    private function storeLogo($logo)
+    private function storeCompanyLogo($logo)
     {
         if (isset($logo) && $logo instanceof UploadedFile) {
             return $logo->store('logos', 'public');

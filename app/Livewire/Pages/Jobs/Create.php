@@ -23,7 +23,7 @@ class Create extends Component
             Auth::user(),
             $this->form->only([
                 'title', 'description', 'location', 'experience',
-                'salary', 'extra_info', 'company_name', 'logo', 'skills'
+                'salary', 'extra_info', 'company_name', 'company_logo', 'skills'
             ])
         );
 

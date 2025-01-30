@@ -83,10 +83,10 @@
                         @enderror
                     </div>
                     <div class="mb-4">
-                        <label for="logo" class="block text-sm font-medium text-gray-700">Logo</label>
-                        <input type="file" id="logo" wire:model="form.logo" name="logo"
+                        <label for="company_logo" class="block text-sm font-medium text-gray-700">Logo</label>
+                        <input type="file" id="company_logo" wire:model="form.company_logo" name="company_logo"
                             class="block w-full mt-1 border-gray-300 rounded-md shadow-sm">
-                        @error('form.logo')
+                        @error('form.company_logo')
                             <span class="text-red-500">{{ $message }}</span>
                         @enderror
                     </div>
