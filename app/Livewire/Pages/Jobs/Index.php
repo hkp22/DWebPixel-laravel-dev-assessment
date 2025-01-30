@@ -15,7 +15,7 @@ class Index extends Component
     public function render()
     {
         return view('livewire.pages.jobs.index', [
-            'jobs' => JobListing::paginate()
+            'jobs' => JobListing::latest()->paginate()
         ]);
     }
 }
