@@ -44,7 +44,7 @@
                         </thead>
                         <tbody>
                             @forelse ($jobs as $job)
-                                <tr :wire:key="'job-' . $job->id" class="border-b dark:border-gray-700">
+                                <tr wire:key="job-{{ $job->id }}" class="border-b dark:border-gray-700">
                                     <th scope="row"
                                         class="px-4 py-3 font-semibold text-gray-900 whitespace-nowrap dark:text-white">
                                         {{ $job->title }}
