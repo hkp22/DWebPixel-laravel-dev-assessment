@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Resources\JobListingResource;
 use App\Models\JobListing;
 use Illuminate\Foundation\Application;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -16,11 +17,22 @@ Route::get('/', function () {
     ]);
 });
 
-Route::get('/dashboard', function () {
+Route::get('/dashboard', function (Request $request) {
+    $jobs = JobListing::query()
+        ->when(
+            $request->has('search'),
+            fn ($query) => $query->where('title', 'like', '%' . $request->input('search') . '%')
+        )
+        ->when(
+            $request->has('location'),
+            fn ($query) => $query->where('location', 'like', '%' . $request->input('location') . '%')
+        )
+        ->with('skills')
+        ->latest()
+        ->paginate();
+
     return Inertia::render('Dashboard', [
-        'jobs' => JobListingResource::collection(
-            JobListing::with('skills')->latest()->paginate()
-        ),
+        'jobs' => JobListingResource::collection($jobs),
     ]);
 })->middleware(['auth', 'verified'])->name('dashboard');
 

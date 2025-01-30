@@ -1,4 +1,12 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+const searchModel = defineModel<string>('search', { default: '' })
+const locationModel = defineModel<string>('location', { default: '' })
+
+const emit = defineEmits()
+function searchJobs() {
+    emit('search')
+}
+</script>
 
 <template>
     <div class="relative bg-slate-100">
@@ -21,7 +29,7 @@
                                     d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
                             </svg>
                         </span>
-                        <input placeholder="Job title or keyword"
+                        <input placeholder="Job title or keyword" v-model="searchModel"
                             class="py-4 border-none shadow-none outline-none focus:outline-none focus:ring-0 ring-0"
                             type="text">
                     </div>
@@ -35,11 +43,11 @@
                                     d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z" />
                             </svg>
                         </span>
-                        <input placeholder="Location"
+                        <input placeholder="Location" v-model="locationModel"
                             class="py-4 border-none shadow-none outline-none focus:outline-none focus:ring-0 ring-0"
                             type="text">
                     </div>
-                    <button
+                    <button @click.prevent="searchJobs"
                         class="px-6 py-2 mr-3 text-sm font-medium text-white rounded-full whitespace-nowrap bg-brand">
                         Find jobs
                     </button>

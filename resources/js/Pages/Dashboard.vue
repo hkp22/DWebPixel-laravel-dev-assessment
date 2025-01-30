@@ -1,15 +1,47 @@
 <script setup lang="ts">
 import Hero from '@/Components/Dashboard/Hero.vue';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
-import { Head } from '@inertiajs/vue3';
+import { Head, router, usePage } from '@inertiajs/vue3';
 import { JobListing } from '@/types/job-listing';
 import { Paginated } from '@/types/pagination';
+import { ref, watch } from 'vue';
 
 defineProps<{
     jobs: Paginated<JobListing>;
 }>();
 
 
+const page = usePage();
+
+// Initialize search queries from URL parameters
+const getInitialQuery = (param: string): string => {
+    const url = new URL(page.url, window.location.origin);
+    return url.searchParams.get(param) || '';
+};
+
+const searchQuery = ref(getInitialQuery('search'));
+const locationQuery = ref(getInitialQuery('location'));
+
+// Debounced search
+let searchTimeout: ReturnType<typeof setTimeout> | null = null;
+
+const searchJobs = () => {
+    if (searchTimeout !== null) {
+        clearTimeout(searchTimeout);
+    }
+    searchTimeout = setTimeout(() => {
+        router.get(route('dashboard'), {
+            search: searchQuery.value,
+            location: locationQuery.value,
+        }, {
+            preserveState: true,
+            replace: true,
+            preserveScroll: true,
+        });
+    }, 500);
+}
+
+watch([searchQuery, locationQuery], searchJobs);
 </script>
 
 <template>
@@ -18,20 +50,25 @@ defineProps<{
 
     <AuthenticatedLayout>
         <!-- Hero -->
-        <Hero />
+        <Hero v-model:search="searchQuery" v-model:location="locationQuery" @search="searchJobs" />
 
         <!-- Job List -->
         <div class="bg-white">
             <div class="container py-5">
 
-                <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
-                    <div v-for="job in jobs.data" class="max-w-2xl p-6 mx-auto mb-4 bg-white rounded-lg shadow-md">
-                        <!-- Card Header -->
+                <div v-if="jobs.data.length === 0" class="p-6 text-lg text-center">
+                    No Job Listing Found
+                </div>
+
+                <div v-else class="grid grid-cols-1 gap-6 md:grid-cols-2">
+                    <div v-for="job in jobs.data"
+                        class="w-full max-w-2xl p-6 mx-auto mb-4 bg-white rounded-lg shadow-md">
+                        <!-- Job Card -->
                         <div class="flex items-start justify-between mb-4">
                             <div class="flex items-start gap-4">
                                 <!-- Company Logo -->
                                 <div v-if="job.company_logo"
-                                    class="flex items-center justify-center w-12 h-12 bg-gray-200 rounded-lg">
+                                    class="flex items-center justify-center w-12 h-12 rounded-lg bg-gray-50">
                                     <img :src="job.company_logo" :alt="job.company_name" />
                                 </div>
 
@@ -116,34 +153,6 @@ defineProps<{
                     </div>
                 </div>
 
-                <!--
-                <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-                    <div v-for="job in jobs.data" :key="job.id" class="p-6 bg-gray-100 rounded-lg shadow-md">
-                        <div class="flex items-center mb-4">
-                            <img v-if="job.company_logo" :src="job.company_logo" :alt="job.company_name"
-                                class="w-12 h-12 mr-4 rounded-full">
-                            <div>
-                                <h3 class="text-xl font-bold">{{ job.company_name }}</h3>
-                                <p class="text-gray-600">{{ job.location }}</p>
-                            </div>
-                        </div>
-                        <h2 class="mb-2 text-2xl font-semibold">{{ job.title }}</h2>
-                        <p class="mb-4 text-gray-700">{{ job.description }}</p>
-                        <div class="mb-4">
-                            <span class="inline-block px-2 py-1 text-xs text-blue-800 bg-blue-100 rounded-full">{{
-                                job.experience }}</span>
-                            <span class="inline-block px-2 py-1 text-xs text-green-800 bg-green-100 rounded-full">{{
-                                job.salary }}</span>
-                        </div>
-                        <div class="mb-4">
-                            <h4 class="font-semibold">Skills:</h4>
-                            <ul class="list-disc list-inside">
-                                <li v-for="skill in job.skills" :key="skill.id">{{ skill.name }}</li>
-                            </ul>
-                        </div>
-                        <p class="text-gray-600">{{ job.extra }}</p>
-                    </div>
-                </div> -->
             </div>
         </div>
     </AuthenticatedLayout>
