@@ -47,28 +47,28 @@
                                 <tr class="border-b dark:border-gray-700">
                                     <th scope="row"
                                         class="px-4 py-3 font-semibold text-gray-900 whitespace-nowrap dark:text-white">
-                                        {{ $job['title'] }}</th>
-                                    <td class="px-4 py-3 whitespace-nowrap">{{ str($job['description'])->words(7) }}
+                                        {{ $job->title }}</th>
+                                    <td class="px-4 py-3 whitespace-nowrap">{{ str($job->description)->words(7) }}
                                     </td>
                                     <td class="px-4 py-3 text-center">
-                                        <img src="{{ $job['company_logo'] }}" class="block w-auto h-12 mx-auto"
-                                            alt="{{ $job['company_name'] }}">
+                                        <img src="{{ $job->companyLogoPath() }}" class="block w-auto h-12 mx-auto"
+                                            alt="{{ $job->company_name }}">
                                     </td>
-                                    <td><span class="font-medium text-gray-900">{{ $job['company_name'] }}</span></td>
-                                    <td class="px-4 py-3">{{ $job['experience'] }}</td>
-                                    <td class="px-4 py-3">{{ $job['salary'] }}</td>
-                                    <td class="px-4 py-3">{{ $job['location'] }}</td>
+                                    <td><span class="font-medium text-gray-900">{{ $job->company_name }}</span></td>
+                                    <td class="px-4 py-3">{{ $job->experience }}</td>
+                                    <td class="px-4 py-3">{{ $job->salary }}</td>
+                                    <td class="px-4 py-3">{{ $job->location }}</td>
                                     <td class="px-4 py-3">
                                         <div class="flex flex-wrap items-center gap-2">
-                                            @foreach ($job['skills'] as $skill)
+                                            @foreach ($job->skills as $skill)
                                                 <span
-                                                    class="inline-block bg-gray-200 rounded-full px-2 py-0.5 text-xs font-medium text-gray-700">{{ $skill }}</span>
+                                                    class="inline-block bg-gray-200 rounded-full px-2 py-0.5 text-xs font-medium text-gray-700">{{ $skill->name }}</span>
                                             @endforeach
                                         </div>
                                     </td>
                                     <td class="px-4 py-3">
                                         <div class="flex flex-wrap items-center gap-2">
-                                            @foreach ($job['extra'] as $extra)
+                                            @foreach ($job->extra as $extra)
                                                 <span
                                                     class="inline-block bg-amber-100 rounded-full px-2 py-0.5 text-xs font-medium text-amber-800">{{ $extra }}</span>
                                             @endforeach
@@ -83,6 +83,12 @@
                         </tbody>
                     </table>
                 </div>
+
+                @if ($jobs->hasPages())
+                    <div class="p-4">
+                        {{ $jobs->links() }}
+                    </div>
+                @endif
             </div>
         </div>
     </div>
