@@ -1,10 +1,10 @@
 <script setup lang="ts"></script>
 
 <template>
-    <div class="bg-slate-100 relative">
-        <div class="container py-32 text-center flex flex-col gap-8 relative">
+    <div class="relative bg-slate-100">
+        <div class="container relative flex flex-col gap-8 py-32 text-center">
             <div class="space-y-4">
-                <h1 class="text-3xl lg:text-6xl font-bold">Find your dream job</h1>
+                <h1 class="text-3xl font-bold lg:text-6xl">Find your dream job</h1>
                 <p class="text-sm lg:text-base text-slate-600">Looking for jobs? Browse our latest job openings to
                     view & apply to
                     the best jobs today!</p>
@@ -12,8 +12,8 @@
             <!-- Search -->
             <div>
                 <div
-                    class="bg-white w-full border rounded-full overflow-hidden border-gray-200 max-w-3xl mx-auto flex items-center justify-center">
-                    <div class="flex-1 flex items-center border-r">
+                    class="flex items-center justify-center w-full max-w-3xl mx-auto overflow-hidden bg-white border border-gray-200 rounded-full">
+                    <div class="flex items-center flex-1 overflow-hidden border-r">
                         <span class="pl-5">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                                 stroke="currentColor" class="w-6 h-6">
@@ -22,10 +22,10 @@
                             </svg>
                         </span>
                         <input placeholder="Job title or keyword"
-                            class="py-4 shadow-none border-none focus:outline-none focus:ring-0 outline-none ring-0"
+                            class="py-4 border-none shadow-none outline-none focus:outline-none focus:ring-0 ring-0"
                             type="text">
                     </div>
-                    <div class="flex-1 flex items-center">
+                    <div class="flex items-center flex-1 overflow-hidden">
                         <span class="pl-5">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                                 stroke="currentColor" class="w-6 h-6">
@@ -36,11 +36,13 @@
                             </svg>
                         </span>
                         <input placeholder="Location"
-                            class="py-4 shadow-none border-none focus:outline-none focus:ring-0 outline-none ring-0"
+                            class="py-4 border-none shadow-none outline-none focus:outline-none focus:ring-0 ring-0"
                             type="text">
                     </div>
-                    <button class="bg-brand px-6 text-sm font-medium py-2 rounded-full text-white mr-3">Find
-                        jobs</button>
+                    <button
+                        class="px-6 py-2 mr-3 text-sm font-medium text-white rounded-full whitespace-nowrap bg-brand">
+                        Find jobs
+                    </button>
                 </div>
             </div>
         </div>
