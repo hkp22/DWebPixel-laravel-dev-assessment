@@ -16,4 +16,9 @@ class JobListing extends Model
         'company_name',
         'logo',
     ];
+
+    public function skills()
+    {
+        return $this->belongsToMany(Skill::class);
+    }
 }
